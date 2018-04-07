@@ -22,6 +22,7 @@ def getPrice():
 		data['timestamp'] = int(time.time());
 		data['exchange'] = 'cex';
 		price_data.insert_one(data);
+		print(data);
 		time.sleep(30);
 
 
