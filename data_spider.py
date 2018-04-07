@@ -1,9 +1,14 @@
 import requests;
 import time;
 import json;
+from pymongo import MongoClient;
 
 
 def getPrice():
+	client  = MongoClient('localhost',27017);
+	db = client['cs5412'];
+	price_data = db['price_data'];
+
 	while (1):
 
 		cur1 = "BTC";
@@ -16,9 +21,9 @@ def getPrice():
 		data['price'] = content['lprice'];
 		data['timestamp'] = int(time.time());
 		data['exchange'] = 'cex';
-		json_data = json.dumps(data);
-		print(json_data);
+		price_data.insert_one(data);
 		time.sleep(30);
+
 
 
 
