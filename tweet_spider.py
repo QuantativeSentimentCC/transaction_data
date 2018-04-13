@@ -27,7 +27,7 @@ def search_twitter():
 	while(1):
 		count = 0;
 		md5Set = set();
-		while (count <= 100):
+		while (count <= 1000):
 			count += 1;
 			result = api.GetSearch(raw_query= "result_type=recent&count=100&q=bitcoin&lang=en&include_entities=true");
 			res_list = []
