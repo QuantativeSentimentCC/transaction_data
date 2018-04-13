@@ -38,11 +38,12 @@ def search_twitter():
 					tweet["source"] = "twitter";
 					tweet["text"] = r.text;
 					time_01 = getTimestamp(r.created_at);
-					tweet["title"] = "twitter_post";
+					tweet["title"] = "Twitter Post";
 					tweet["time"] = time_01;
 					tweet["weight"] = r.favorite_count + r.retweet_count;
 					md5Set.add(MD5value);
-					res_list.append(tweet);
+					if '\u2026' not in tweet["text"]:
+						res_list.append(tweet);
 			
 			result = news_data.insert_many(res_list);
 			print(result);
