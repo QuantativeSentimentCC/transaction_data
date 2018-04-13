@@ -3,6 +3,8 @@ import json
 from pymongo import MongoClient;
 import hashlib;
 import time;
+import html
+
 
 
 def getTimestamp(create):
@@ -36,7 +38,7 @@ def search_twitter():
 				if MD5value not in md5Set:
 					tweet = {};
 					tweet["source"] = "twitter";
-					tweet["text"] = r.text;
+					tweet["text"] = html.unescape(r.text);
 					time_01 = getTimestamp(r.created_at);
 					tweet["title"] = "Twitter Post";
 					tweet["time"] = time_01;
@@ -44,9 +46,10 @@ def search_twitter():
 					md5Set.add(MD5value);
 					if '\u2026' not in tweet["text"]:
 						res_list.append(tweet);
+						print(tweet["text"]);
 			
-			result = news_data.insert_many(res_list);
-			print(result);
+			#result = news_data.insert_many(res_list);
+			#print(result);
 			time.sleep(10);
 
 
