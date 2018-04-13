@@ -46,7 +46,6 @@ def search_twitter():
 					md5Set.add(MD5value);
 					if '\u2026' not in tweet["text"]:
 						res_list.append(tweet);
-						print(tweet["text"]);
 			
 			#result = news_data.insert_many(res_list);
 			#print(result);
