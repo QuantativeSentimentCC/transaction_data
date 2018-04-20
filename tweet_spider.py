@@ -47,9 +47,9 @@ def search_twitter():
 					if '\u2026' not in tweet["text"]:
 						res_list.append(tweet);
 
-			
-			result = news_data.insert_many(res_list);
-			print(result);
+			if len(res_list) != 0:
+				result = news_data.insert_many(res_list);
+				print(result);
 			time.sleep(10);
 
 
