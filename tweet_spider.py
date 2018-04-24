@@ -30,6 +30,8 @@ def search_twitter():
 		while (count <= 1000):
 			count += 1;
 			result = api.GetSearch(raw_query= "result_type=recent&count=100&q=bitcoin&lang=en&include_entities=true");
+			if result is None or len(result) == 0:
+				continue;
 			res_list = []
 			for r in result:
 				m = hashlib.md5();
