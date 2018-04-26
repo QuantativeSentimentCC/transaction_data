@@ -29,30 +29,33 @@ def search_twitter():
 		md5Set = set();
 		while (count <= 1000):
 			count += 1;
-			result = api.GetSearch(raw_query= "result_type=recent&count=100&q=bitcoin&lang=en&include_entities=true");
-			if result is None or len(result) == 0:
-				continue;
-			res_list = []
-			for r in result:
-				m = hashlib.md5();
-				m.update(r.text.encode('utf-8'));
-				MD5value = m.digest();
-				if MD5value not in md5Set:
-					tweet = {};
-					tweet["source"] = "twitter";
-					tweet["text"] = html.unescape(r.text);
-					time_01 = getTimestamp(r.created_at);
-					tweet["title"] = "Twitter Post";
-					tweet["time"] = time_01;
-					tweet["weight"] = r.favorite_count + r.retweet_count;
-					md5Set.add(MD5value);
-					if '\u2026' not in tweet["text"]:
-						res_list.append(tweet);
+			try:
+				result = api.GetSearch(raw_query= "result_type=recent&count=100&q=bitcoin&lang=en&include_entities=true");
+				if result is None or len(result) == 0:
+					continue;
+				res_list = []
+				for r in result:
+					m = hashlib.md5();
+					m.update(r.text.encode('utf-8'));
+					MD5value = m.digest();
+					if MD5value not in md5Set:
+						tweet = {};
+						tweet["source"] = "twitter";
+						tweet["text"] = html.unescape(r.text);
+						time_01 = getTimestamp(r.created_at);
+						tweet["title"] = "Twitter Post";
+						tweet["time"] = time_01;
+						tweet["weight"] = r.favorite_count + r.retweet_count;
+						md5Set.add(MD5value);
+						if '\u2026' not in tweet["text"]:
+							res_list.append(tweet);
 
-			if len(res_list) != 0:
-				result = news_data.insert_many(res_list);
-				print(result);
-			time.sleep(10);
+				if len(res_list) != 0:
+					result = news_data.insert_many(res_list);
+					print(result);
+				time.sleep(10);
+			except:
+				print("unexpected failure");
 
 
 
