@@ -42,6 +42,7 @@ def search_twitter():
 						tweet = {};
 						tweet["source"] = "twitter";
 						tweet["text"] = html.unescape(r.text);
+						print(tweet["text"]);
 						time_01 = getTimestamp(r.created_at);
 						tweet["title"] = "Twitter Post";
 						tweet["time"] = time_01;

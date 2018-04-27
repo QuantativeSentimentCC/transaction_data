@@ -16,14 +16,17 @@ def getPrice():
 		url = "https://cex.io/api/last_price/" + cur1 + "/" + cur2;
 		response = requests.get(url);
 		if response is not None and response.status_code == 200:
-			content = response.json();
-			data = {}
-			data['id'] = '1';
-			data['price'] = content['lprice'];
-			data['timestamp'] = int(time.time());
-			data['exchange'] = 'cex';
-			price_data.insert_one(data);
-			print(data);
+			try:
+				content = response.json();
+				data = {}
+				data['id'] = '1';
+				data['price'] = content['lprice'];
+				data['timestamp'] = int(time.time());
+				data['exchange'] = 'cex';
+				price_data.insert_one(data);
+				print(data);
+			except:
+				print("a nobody care fail happen")
 		time.sleep(30);
 
 
