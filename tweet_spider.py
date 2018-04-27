@@ -4,6 +4,7 @@ from pymongo import MongoClient;
 import hashlib;
 import time;
 import html
+import re;
 
 
 
@@ -41,7 +42,24 @@ def search_twitter():
 					if MD5value not in md5Set:
 						tweet = {};
 						tweet["source"] = "twitter";
-						tweet["text"] = html.unescape(r.text);
+						raw_text = html.unescape(r.text);
+						new_text = raw_text;
+						for i in range(len(raw_text) - 5):
+							if raw_text[i:i+5] == "https":
+								j = i;
+								while j < len(raw_text) and raw_text[j] != " ":
+									j += 1;
+								new_text = raw_text[0:i] + raw_text[j:];
+								break;
+						nnew_text = new_text;
+						for i in range(len(new_text) - 5):
+							if new_text[i:i+5] == "https":
+								j = i;
+								while j < len(new_text) and new_text[j] != " ":
+									j += 1;
+								nnew_text = new_text[0:i] + new_text[j:];
+								break;
+						tweet["text"] = nnew_text;
 						print(tweet["text"]);
 						time_01 = getTimestamp(r.created_at);
 						tweet["title"] = "Twitter Post";
