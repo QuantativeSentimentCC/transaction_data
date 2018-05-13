@@ -5,7 +5,14 @@ import hashlib;
 import time;
 import html
 import re;
+import socket;
 
+
+#UDP_IP = "34.218.214.180";
+UDP_IP = "34.208.32.187";
+#UDP_IP = "127.0.0.1";
+UDP_PORT = 5005;
+sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM);
 
 
 def getTimestamp(create):
@@ -70,6 +77,7 @@ def search_twitter():
 							res_list.append(tweet);
 
 				if len(res_list) != 0:
+					sock.sendto(json.dumps(res_list).encode('utf-8'),(UDP_IP,UDP_PORT));
 					result = news_data.insert_many(res_list);
 					print(result);
 				time.sleep(10);
